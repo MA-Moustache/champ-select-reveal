@@ -11,4 +11,4 @@ Install the last version of python and add the executable and Scripts folder to 
 
 `python champ1.py`
 
-Any question ? discord: AIM#1679
+Any question ? discord: allinmachine
