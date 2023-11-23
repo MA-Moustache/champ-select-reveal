@@ -67,7 +67,7 @@ if len(processes) > 0:
                 data_table = data_set.get("participants")
                 if len(data_table) == 5:
                     for row in data_table:
-                        participants.append(row.get("name"))
+                        participants.append(row.get("name")+"%23"+row.get("game_tag"))
                     url = "https://www.op.gg/multisearch/euw?summoners=" + ",".join(participants)
                     print(url)
                     webbrowser.open_new_tab(url)
