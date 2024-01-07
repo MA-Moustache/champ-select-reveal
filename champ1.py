@@ -18,15 +18,12 @@ class ClientData:
         self.RiotToken = ""
         self.ClientPort = 0
         self.ClientToken = ""
-        self.Region = ""
-        self.GameState = ""
         
 def extract_content(str_source, str_start, str_end):
     if str_start in str_source and str_end in str_source:
         start = str_source.index(str_start) + len(str_start)
         end = str_source.index(str_end, start)
         return str_source[start:end]
-
     return ""
 
 
@@ -58,8 +55,6 @@ if len(processes) > 0:
                 ClientInfo.RiotToken = str(base64.b64encode((b"riot:" + extract_content(ClientInfo.cmdline, "--riotclient-auth-token=", "," "--riotclient").encode("ISO-8859-1"))), "utf-8")
                 ClientInfo.ClientPort = int(extract_content(ClientInfo.cmdline, "--app-port=", "," "--install"))
                 ClientInfo.ClientToken = str(base64.b64encode((b"riot:" + extract_content(ClientInfo.cmdline, "--remoting-auth-token=", "," "--respawn-command=LeagueClient.exe").encode("ISO-8859-1"))), "utf-8")
-                ClientInfo.Region = extract_content(make_request(ClientInfo, "GET", "/lol-rso-auth/v1/authorization", True), "currentPlatformId\":\"", "\",\"subject")
-                ClientInfo.GameState = make_request(ClientInfo, "GET", "/lol-gameflow/v1/gameflow-phase", True).strip('"')
                 
                 participants = []
 
@@ -69,5 +64,4 @@ if len(processes) > 0:
                     for row in data_table:
                         participants.append(row.get("game_name")+"%23"+row.get("game_tag"))
                     url = "https://www.op.gg/multisearch/euw?summoners=" + ",".join(participants)
-                    print(url)
                     webbrowser.open_new_tab(url)
